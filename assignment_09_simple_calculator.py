@@ -68,3 +68,84 @@
 # YOUR CODE BELOW — remove the # symbols from the scaffold and fill it in
 # =============================================================================
 
+def get_numbers():
+    # Asks the user for two numbers and returns them as a tuple (a, b)
+    return float(input("Enter first number : ")), float(input("Enter second number: "))
+
+
+def add(a, b):
+    # Returns the sum of a and b
+    return a + b
+
+
+def subtract(a, b):
+    # Returns the difference of a and b
+    return a - b
+
+
+def multiply(a, b):
+    # Returns the product of a and b
+    return a * b
+
+
+def divide(a, b):
+    """Returns the quotient of a and b, rounded to 2 decimal places.
+    Raises ZeroDivisionError if b is zero."""
+    if b == 0:
+        raise ZeroDivisionError("Cannot divide by zero.")
+    return round(a / b, 2)
+
+
+def modulus(a, b):
+    # Returns the remainder of a divided by b
+    if b == 0:
+        raise ZeroDivisionError("Cannot divide by zero.")
+    return round(a % b, 2)
+
+
+def exponentiate(a, b):
+    # Returns a raised to the power of b
+    return a ** b
+
+
+OPERATIONS = {
+    "1": ("+", add),
+    "2": ("-", subtract),
+    "3": ("*", multiply),
+    "4": ("/", divide),
+    "5": ("%", modulus),
+    "6": ("**", exponentiate),
+}
+
+
+def perform_operation(choice):
+    # Prompts for two numbers, performs the chosen operation, and prints the result."""
+    a, b = get_numbers()
+    symbol, func = OPERATIONS[choice]
+
+    try:
+        print(f"Result: {a} {symbol} {b} = {func(a, b)}")
+    except ZeroDivisionError as e:
+        print(f"Error: {e}")
+
+
+def main():
+ # Runs the interactive calculator menu loop."""
+    menu = ("1. Addition\n2. Subtraction\n3. Multiplication\n4. Division\n"
+            "5. Modulus\n6. Exponentiation\n7. Quit")
+
+    while True:
+        print(menu)
+        choice = input("Select an operation (1-7): ")
+
+        if choice in OPERATIONS:
+            perform_operation(choice)
+        elif choice == "7":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 7.")
+
+
+if __name__ == "__main__":
+    main()

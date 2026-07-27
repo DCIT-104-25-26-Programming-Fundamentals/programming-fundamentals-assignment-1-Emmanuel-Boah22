@@ -90,3 +90,87 @@
 # YOUR CODE BELOW — remove the # symbols from the scaffold and fill it in
 # =============================================================================
 
+# Global list to store all student records
+students = []
+
+
+def add_student():
+    # Asks the user for name, ID, and scores, then saves the student record
+    name = input("Student name: ")
+    student_id = int(input("Student ID: "))
+
+    num_scores = int(input("How many scores? "))
+    scores = [int(input(f"Enter score {i}: "))
+              for i in range(1, num_scores + 1)]
+
+    students.append({"name": name, "id": student_id, "scores": scores})
+    print(f'Student "{name}" added successfully.')
+
+
+def calc_average(scores):
+    # Returns the average of a list of scores, rounded to 2 decimal places."""
+    return round(sum(scores) / len(scores), 2)
+
+
+def display_all_students():
+    # Prints a formatted table of all students with their scores and averages
+    if not students:
+        print("No students have been added yet.")
+        return
+
+    print(" " * 50)
+    print(f"{'Name':<15} {'ID':<12} {'Scores':<15} {'Average'}")
+    print(" " * 50)
+
+    for student in students:
+        scores_str = ", ".join(str(s) for s in student["scores"])
+        average = calc_average(student["scores"])
+        print(
+            f"{student['name']:<15} {student['id']:<12} {scores_str:<15} {average}")
+
+    print(" " * 50)
+
+
+def calculate_average():
+    # Asks for a student ID, finds the student, and displays their average score
+    if not students:
+        print("No students have been added yet.")
+        return
+
+    student_id = int(input("Enter student ID: "))
+
+    for student in students:
+        if student["id"] == student_id:
+            print(
+                f"{student['name']}'s average score: {calc_average(student['scores'])}")
+            return
+
+    print(f"Error: Student with ID {student_id} not found.")
+
+
+def quit_program():
+    # Ends the program
+    print("Goodbye!")
+
+
+def main():
+    # Runs the interactive menu loop
+    menu = "1. Add student\n2. Display all students\n3. Calculate average score\n4. Quit"
+    actions = {"1": add_student,
+               "2": display_all_students, "3": calculate_average}
+
+    while True:
+        print(menu)
+        choice = input("Enter your choice (1-4): ")
+
+        if choice == "4":
+            quit_program()
+            break
+        elif choice in actions:
+            actions[choice]()
+        else:
+            print("Invalid choice. Please enter a number between 1 and 4.")
+
+
+if __name__ == "__main__":
+    main()
